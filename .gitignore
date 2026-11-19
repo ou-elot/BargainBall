@@ -1,0 +1,28 @@
+# Local Python environment and interpreter artifacts
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Downloaded and prepared player/salary data
+data/raw/*
+!data/raw/download_manifest.json
+data/processed/
+
+# Trained checkpoints and generated experiment outputs
+models/
+results/
+
+# LaTeX build artifacts (keep report source, PDF, and figure)
+milestone/*.aux
+milestone/*.bbl
+milestone/*.blg
+milestone/*.log
+milestone/*.out
+milestone/milestone_overleaf.zip
+
+# Editor and operating-system files
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

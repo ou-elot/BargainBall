@@ -1,0 +1,372 @@
+[
+  {
+    "file": "basketball_reference_latest.zip",
+    "url": "https://www.kaggle.com/api/v1/datasets/download/sumitrodatta/nba-aba-baa-stats",
+    "bytes": 11152505,
+    "sha256": "5be35c2837020214a98148f42c21f90bfba0ea1c75d2b3ab8ff6b91baaa4917f",
+    "verified_utc": "2026-10-30T00:50:34.622796+00:00"
+  },
+  {
+    "file": "salaries/historical_salaries.csv",
+    "url": "https://raw.githubusercontent.com/logan-lauton/NBA-Player-HUD/main/NBA%20Salaries%281990-2023%29.csv",
+    "bytes": 744670,
+    "sha256": "13d0195ed981195db182da27a76d0c3049d3aa8ddec626ebb916b5409ff6f323",
+    "verified_utc": "2026-10-30T00:50:34.625182+00:00"
+  },
+  {
+    "file": "salaries/bbref_historical_salaries.csv",
+    "url": "https://raw.githubusercontent.com/ramvibhakar/basketball-analytics/master/data/player_salary.csv",
+    "bytes": 919718,
+    "sha256": "c11a1e916e08711de88d1aebb3eba0e005ba1508ad376efd22bf5c2e6565461e",
+    "verified_utc": "2026-10-30T00:50:34.627742+00:00"
+  },
+  {
+    "file": "salaries/alternative_salaries.csv",
+    "url": "https://raw.githubusercontent.com/erikgregorywebb/datasets/master/nba-salaries.csv",
+    "bytes": 482493,
+    "sha256": "999bde226a488a9d343979706435206747c2d27143a2b89d83117711a5806a6a",
+    "verified_utc": "2026-10-30T00:50:34.628472+00:00"
+  },
+  {
+    "file": "salaries/hoopshype_snapshot.csv",
+    "url": "https://huggingface.co/datasets/Mr-Bridge/nba-salary-cap-contracts-2016-2026/resolve/main/player_salaries.csv",
+    "bytes": 1105974,
+    "sha256": "a4528405c64ffeaf3a1aa5e423b8cb97f925bc050fdf6d12acf2388e291e5df6",
+    "verified_utc": "2026-10-30T00:50:34.630590+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_1997.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_1997.parquet",
+    "bytes": 553928,
+    "sha256": "225e8cfd50340b736842add7951ee54c2ac3e310c7659a247769cf264936c743",
+    "verified_utc": "2026-10-30T00:50:34.631223+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_1998.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_1998.parquet",
+    "bytes": 526254,
+    "sha256": "bbedd42f77f0d9578c5cd95780f5d1e41406f2a3e83eed4fbe0d1ca6e04c22cc",
+    "verified_utc": "2026-10-30T00:50:34.631844+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_1999.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_1999.parquet",
+    "bytes": 467033,
+    "sha256": "59cef7fe736e6689400c12d6463162c9ad1c1f109b66944466d15e8a3e6ded23",
+    "verified_utc": "2026-10-30T00:50:34.632470+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2000.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2000.parquet",
+    "bytes": 547236,
+    "sha256": "f7713cc4e80d3e519e3e1ec3b83b4e9174c9cbde908aa7bbba181d49d3ad5c84",
+    "verified_utc": "2026-10-30T00:50:34.633106+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2001.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2001.parquet",
+    "bytes": 546994,
+    "sha256": "4f6e753e45c1cb44153b11db418ef74078353b1e90920342477a8787d080aa30",
+    "verified_utc": "2026-10-30T00:50:34.633791+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2002.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2002.parquet",
+    "bytes": 464128,
+    "sha256": "5013cd460376ed62776912aef83d304b632257686ec260facf7daf092ad4c35d",
+    "verified_utc": "2026-10-30T00:50:34.634292+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2003.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2003.parquet",
+    "bytes": 491597,
+    "sha256": "f12a6370463c3d15bbad8223c6736e2833c4585cbf540be50d47356c8c3180ee",
+    "verified_utc": "2026-10-30T00:50:34.634777+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2004.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2004.parquet",
+    "bytes": 539207,
+    "sha256": "ce629020f8c9ea9dd63e0539a0fe319b4380ece2673e4f78f97229846a63f7ee",
+    "verified_utc": "2026-10-30T00:50:34.635315+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2005.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2005.parquet",
+    "bytes": 469485,
+    "sha256": "48efce8aadace4176b4c8be63172d8653e112bf04f273cd3c7b67fd199159336",
+    "verified_utc": "2026-10-30T00:50:34.635774+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2006.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2006.parquet",
+    "bytes": 549383,
+    "sha256": "47580086449bb15dc309d16a71823b26b1142cf072c3eb5355db3d4b70991c67",
+    "verified_utc": "2026-10-30T00:50:34.636554+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2007.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2007.parquet",
+    "bytes": 548228,
+    "sha256": "db40158a5eedad65ba74e963e9b177ee4d3fda51af7a0d91cbedf1542584041b",
+    "verified_utc": "2026-10-30T00:50:34.637186+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2008.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2008.parquet",
+    "bytes": 555790,
+    "sha256": "3f9efa03a4087c65ccaed7b122942c868f081d87b5678d2bfa9693506f6685bf",
+    "verified_utc": "2026-10-30T00:50:34.637764+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2009.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2009.parquet",
+    "bytes": 545105,
+    "sha256": "88a3cc533e46d2e9e6c09f86b90d6c7a9b37d5b7225a3d6dbcf8677446a5157e",
+    "verified_utc": "2026-10-30T00:50:34.638368+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2010.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2010.parquet",
+    "bytes": 536233,
+    "sha256": "f4394471bfb7c458e9d4413a647fe444a39f6e11131ee64eb0d4525daeb45ca4",
+    "verified_utc": "2026-10-30T00:50:34.639001+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2011.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2011.parquet",
+    "bytes": 522953,
+    "sha256": "77a064ae4a38bb5bcb91d1444d32043dd9763c21db2e28bc48514e38738de7ce",
+    "verified_utc": "2026-10-30T00:50:34.639545+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2012.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2012.parquet",
+    "bytes": 531376,
+    "sha256": "4ba5fbf85ee549700adedc6886a7337f31a5e51fe670af85df858349522c3ad1",
+    "verified_utc": "2026-10-30T00:50:34.640083+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2013.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2013.parquet",
+    "bytes": 590567,
+    "sha256": "5c2827a4dc9dde6388adf60daebe5d3d35f4a30f30e73441b8090202a8cd2c5a",
+    "verified_utc": "2026-10-30T00:50:34.640729+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2014.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2014.parquet",
+    "bytes": 565700,
+    "sha256": "bc189d8823b783ad6ae6067f890c405432e614385f633a3da16bd72bfcffd8d2",
+    "verified_utc": "2026-10-30T00:50:34.641316+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2015.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2015.parquet",
+    "bytes": 512174,
+    "sha256": "9b74333381482599f931a03a1f4213389cb37b3af4cf3455a9e8cc38c099040d",
+    "verified_utc": "2026-10-30T00:50:34.641847+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2016.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2016.parquet",
+    "bytes": 564159,
+    "sha256": "1bd1c268a0343daa328c16c7651361e5c88e78183b35a1cce459036f3ffa7308",
+    "verified_utc": "2026-10-30T00:50:34.642414+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2017.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2017.parquet",
+    "bytes": 602488,
+    "sha256": "94f5d704fc18977600030260831f9b0f3ad8a79cb2d198906c6fd09149796f9e",
+    "verified_utc": "2026-10-30T00:50:34.643102+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2018.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2018.parquet",
+    "bytes": 550526,
+    "sha256": "2e70ccf09e4ffbe71b03ebbc832fbd91a14818adb3289973a8a22fee26e96813",
+    "verified_utc": "2026-10-30T00:50:34.643646+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2019.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2019.parquet",
+    "bytes": 580108,
+    "sha256": "bc1cf37d09d69c796220badcdfa0914a85d71c120bf8c7cdb7b088be68c57c25",
+    "verified_utc": "2026-10-30T00:50:34.644345+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2020.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2020.parquet",
+    "bytes": 658406,
+    "sha256": "92029c2259f23459d4862280b04de1ad1057596bdff154dafff77a701f79914e",
+    "verified_utc": "2026-10-30T00:50:34.645078+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2021.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2021.parquet",
+    "bytes": 592799,
+    "sha256": "112fe9d7e6cafc78c8e0a2492dc54315497c3a63d7ceb7ed2b085b9a3012cdff",
+    "verified_utc": "2026-10-30T00:50:34.645687+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2022.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2022.parquet",
+    "bytes": 717831,
+    "sha256": "8009764d6bba3edb6ba3a14bce7848242290ca58a9a8b5a48fdac1a0fadf7006",
+    "verified_utc": "2026-10-30T00:50:34.646389+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2023.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2023.parquet",
+    "bytes": 639005,
+    "sha256": "b20b6e4b384df0251964d9e930151ec9248da7f24f93f61d802473bb7c3c582c",
+    "verified_utc": "2026-10-30T00:50:34.647014+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2024.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2024.parquet",
+    "bytes": 579088,
+    "sha256": "d361b108035de50a45ea72f73065f13182976522596b80ecd9dfe9f040ab6f87",
+    "verified_utc": "2026-10-30T00:50:34.647694+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2025.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2025.parquet",
+    "bytes": 660973,
+    "sha256": "06badb896d5feb784918738f9292e9a8c1124c100c35a1d72f104cc423340a36",
+    "verified_utc": "2026-10-30T00:50:34.648427+00:00"
+  },
+  {
+    "file": "sportsdataverse/player_season_stats_2026.parquet",
+    "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/nba_stats_player_season_stats/player_season_stats_2026.parquet",
+    "bytes": 653984,
+    "sha256": "ba4bbe3256f19c752dc5bb40ddd8b2dc82bba4492b03708196a168a4fc696354",
+    "verified_utc": "2026-10-30T00:50:34.649104+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2010.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2010/data.parquet",
+    "bytes": 6211,
+    "sha256": "bf777cf99954ca28c5fa8bd7e2cccb3eccc8a1bd14a47328aed09135c29ddf81",
+    "verified_utc": "2026-10-30T00:50:34.649165+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2011.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2011/data.parquet",
+    "bytes": 6229,
+    "sha256": "8af3050eaeb01f894fa3d435213b9f398b0b2f09fd572711bd73351af782f9d8",
+    "verified_utc": "2026-10-30T00:50:34.649200+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2012.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2012/data.parquet",
+    "bytes": 6182,
+    "sha256": "e9113b4a18eff00d8b1e748555d248787d78799862bb5ce6a2e9c61b6f8d30b8",
+    "verified_utc": "2026-10-30T00:50:34.649233+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2013.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2013/data.parquet",
+    "bytes": 6438,
+    "sha256": "6c1fd4d4086f9fa2a514edb6b520f1aece318c2133949cb9aca4abd71ff48d46",
+    "verified_utc": "2026-10-30T00:50:34.649265+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2014.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2014/data.parquet",
+    "bytes": 5735,
+    "sha256": "ed3c842099b8847017fc051496f37133d971c47ab07597e562be92638d111b02",
+    "verified_utc": "2026-10-30T00:50:34.649295+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2015.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2015/data.parquet",
+    "bytes": 7024,
+    "sha256": "cb2f1217d63c16f844c7f58fe2976cbf54ca0b6fe449b6d410a88d0303d52548",
+    "verified_utc": "2026-10-30T00:50:34.649326+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2016.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2016/data.parquet",
+    "bytes": 7044,
+    "sha256": "ce776dcd4eef1f1a9e23b2340e92283eaede6805b9e4eba4fb220f917f353e62",
+    "verified_utc": "2026-10-30T00:50:34.649357+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2017.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2017/data.parquet",
+    "bytes": 7544,
+    "sha256": "754d4b9537f9af12515e6928d66c4664600860bed6104cd7df81efb0c6632082",
+    "verified_utc": "2026-10-30T00:50:34.649424+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2018.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2018/data.parquet",
+    "bytes": 7805,
+    "sha256": "5753caf48fe5cd1517c88623a3517670c664bda30468f153d3c22bae5d07d6d6",
+    "verified_utc": "2026-10-30T00:50:34.649464+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2019.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2019/data.parquet",
+    "bytes": 7708,
+    "sha256": "b8a5abc6bc34b1afa6e8aaedee04197a77b996ed237fdfbf7a61e8c224f08c89",
+    "verified_utc": "2026-10-30T00:50:34.649498+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2020.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2020/data.parquet",
+    "bytes": 7545,
+    "sha256": "99e0df8cb0a0c674edd2446a25898929ff71241c394334f1e232410246c5ba7b",
+    "verified_utc": "2026-10-30T00:50:34.649528+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2021.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2021/data.parquet",
+    "bytes": 7653,
+    "sha256": "d0fa286d1ce1e65eaed0a1a6d9f185e18b91523bba61106234132c76b66a2663",
+    "verified_utc": "2026-10-30T00:50:34.649561+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2022.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2022/data.parquet",
+    "bytes": 8818,
+    "sha256": "f286f358faa287e8f3b34d2e2d8090cba174adb1fe6964d9d0061479a9887ab8",
+    "verified_utc": "2026-10-30T00:50:34.649594+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2023.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2023/data.parquet",
+    "bytes": 7816,
+    "sha256": "7503117cead3f623c9ac8ef5c6dc0e6b2789aa9123325f7c9005174334058139",
+    "verified_utc": "2026-10-30T00:50:34.649625+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2024.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2024/data.parquet",
+    "bytes": 8198,
+    "sha256": "e61c59a5cbc63cc1160ab2c8efe2beefc664c3fe4be13ae7622598b460cdc7c6",
+    "verified_utc": "2026-10-30T00:50:34.649657+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2025.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2025/data.parquet",
+    "bytes": 7998,
+    "sha256": "dec5dd0e5ebeeb005d01bb28742565a603c21a70330498536acda12e96b665e5",
+    "verified_utc": "2026-10-30T00:50:34.649689+00:00"
+  },
+  {
+    "file": "bbref_salaries/bbref_salaries_2026.parquet",
+    "url": "https://basketball-data.billmill.org/nba/bbref/bbref_salaries/season=2026/data.parquet",
+    "bytes": 8122,
+    "sha256": "a5b98f08c896143a22bd86ec3da14a259289df0fd9cdf97c2cc8876baaa11458",
+    "verified_utc": "2026-10-30T00:50:34.649719+00:00"
+  },
+  {
+    "file": "salaries/BargainBall_listed_salaries.csv",
+    "source": "previous project salary reconciliation",
+    "bytes": 1560621,
+    "sha256": "f75b58e5569cce97fabf55a397551358570c50448aed51b3d9e24f1ddfcb48fc"
+  }
+]
