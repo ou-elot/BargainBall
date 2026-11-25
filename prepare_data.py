@@ -207,6 +207,67 @@ def attach_salaries(pairs, matched):
         snapshot_rows.append({"player_id": key[0], "target_season": int(key[1]), "target_salary": group["salary"].sum(), "salary_source_url": "https://huggingface.co/datasets/Mr-Bridge/nba-salary-cap-contracts-2016-2026/blob/main/player_salaries.csv", "salary_needs_source_review": True, "salary_method": "hoopshype_snapshot_team_sum"})
 
     salaries = pd.concat([salaries, pd.DataFrame(snapshot_rows)], ignore_index=True).drop_duplicates(["player_id", "target_season"], keep="first")
+
+    # Resolve the same-name collision in the NBA-Player-HUD historical file:
+    # smithch04 is the Clippers player, while the $4,375,143 amount belongs
+    # to the separate Spurs player with the same name.
+    verified_corrections = pd.DataFrame([
+        {
+            "player_id": "smithch04",
+            "target_season": 1999,
+            "target_salary": 677080,
+            "salary_source_url": "https://www.hoopshype.com/salaries/players/charles-smith/3176",
+            "salary_needs_source_review": False,
+            "salary_method": "verified_name_collision_correction",
+        },
+        {
+            "player_id": "bryanma01",
+            "target_season": 2001,
+            "target_salary": 3029268,
+            "salary_source_url": "https://www.hoopshype.com/salaries/players/mark-bryant/42",
+            "salary_needs_source_review": False,
+            "salary_method": "verified_source_confirmation",
+        },
+        {
+            "player_id": "richaja01",
+            "target_season": 2009,
+            "target_salary": 12664335,
+            "salary_source_url": "https://www.hoopshype.com/salaries/players/jason-richardson/3496",
+            "salary_needs_source_review": False,
+            "salary_method": "verified_source_confirmation",
+        },
+    ])
+    external_verifications_path = RAW / "salaries" / "verified_salary_overrides.csv"
+    if external_verifications_path.exists():
+        external_verifications = pd.read_csv(external_verifications_path)
+        verified_corrections = pd.concat([verified_corrections, external_verifications], ignore_index=True)
+    salaries = pd.concat([salaries, verified_corrections], ignore_index=True)
+    salaries = salaries.drop_duplicates(["player_id", "target_season"], keep="last")
+    pd.DataFrame([{
+        "player_id": "smithch04",
+        "player": "Charles Smith",
+        "target_season": 1999,
+        "previous_salary": 5052223,
+        "corrected_salary": 677080,
+        "reason": "The historical name match combined the Clippers player's salary with a different Charles Smith's Spurs salary.",
+        "verification_sources": "https://www.hoopshype.com/salaries/players/charles-smith/3176; https://www.basketball-reference.com/players/s/smithch04.html",
+    }, {
+        "player_id": "bryanma01",
+        "player": "Mark Bryant",
+        "target_season": 2001,
+        "previous_salary": 3029268,
+        "corrected_salary": 3029268,
+        "reason": "HoopsHype shows $2,200,000 with Cleveland and $829,268 with Dallas; their sum confirms the listed season salary.",
+        "verification_sources": "https://www.hoopshype.com/salaries/players/mark-bryant/42; https://www.basketball-reference.com/players/b/bryanma01.html",
+    }, {
+        "player_id": "richaja01",
+        "player": "Jason Richardson",
+        "target_season": 2009,
+        "previous_salary": 12664335,
+        "corrected_salary": 12664335,
+        "reason": "HoopsHype shows $12,222,221 with Phoenix and $442,114 with Miami; their sum confirms the listed season salary.",
+        "verification_sources": "https://www.hoopshype.com/salaries/players/jason-richardson/3496; https://www.basketball-reference.com/players/r/richaja01.html",
+    }]).to_csv(PROCESSED / "verified_salary_corrections.csv", index=False)
     salaries.to_csv(PROCESSED / "salary_lookup.csv", index=False)
     pairs = pairs.merge(salaries, on=["player_id", "target_season"], how="left", validate="one_to_one")
     pairs["salary_available"] = pairs["target_salary"].notna() & pairs["target_salary"].gt(0)

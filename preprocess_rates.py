@@ -5,6 +5,7 @@ import hashlib
 import json
 import numpy as np
 import pandas as pd
+from profile_targets import BASELINE_COLUMNS, NEXT_SEASON_COLUMNS, PCA_TARGETS, PROFILE_TARGETS
 
 ROOT = Path(__file__).resolve().parent
 
@@ -36,6 +37,20 @@ def main():
             arrays["y_" + target + "_" + split] = aligned["next_season_" + target].to_numpy(dtype=np.float32)
             arrays["baseline_" + target + "_" + split] = aligned[target].to_numpy(dtype=np.float32)
 
+        profile_y = aligned[
+            [NEXT_SEASON_COLUMNS[target] for target in PROFILE_TARGETS]
+        ].to_numpy(dtype=np.float64)
+        profile_baseline = aligned[
+            [BASELINE_COLUMNS[target] for target in PROFILE_TARGETS]
+        ].to_numpy(dtype=np.float64)
+        arrays["profile_y_" + split] = profile_y
+        arrays["profile_mask_" + split] = np.isfinite(profile_y)
+        arrays["profile_baseline_" + split] = profile_baseline
+        arrays["profile_baseline_mask_" + split] = np.isfinite(profile_baseline)
+        arrays["skill_profile_mask_" + split] = (
+            aligned["skill_profile_valid"].to_numpy(dtype=bool)
+        )
+
         mask = aligned["rate_valid"].to_numpy(dtype=bool)
         arrays["rate_mask_" + split] = mask
         arrays["next_season_minutes_" + split] = aligned["next_season_minutes"].to_numpy(dtype=np.float64)
@@ -48,9 +63,20 @@ def main():
         print(split + ": " + str(int(mask.sum())) + " valid rate examples out of " + str(len(rows)))
 
     arrays["base_model_data_sha256"] = np.array(hashlib.sha256(base_path.read_bytes()).hexdigest())
+    arrays["profile_target_names"] = np.asarray(PROFILE_TARGETS, dtype=str)
+    arrays["pca_target_names"] = np.asarray(PCA_TARGETS, dtype=str)
     path = folder / "model_data_rates.npz"
     np.savez_compressed(path, **arrays)
-    report = {"base_model_data_sha256": str(arrays["base_model_data_sha256"]), "splits": sizes, "input_arrays": "copied unchanged from model_data.npz", "excluded_rows": "Undefined next-season rate target or prior-season baseline; no target imputation", "next_season_minutes": "Observed evaluation metadata only; not a model input", "test_metrics_computed": False}
+    report = {
+        "base_model_data_sha256": str(arrays["base_model_data_sha256"]),
+        "splits": sizes,
+        "input_arrays": "copied unchanged from model_data.npz",
+        "profile_targets": PROFILE_TARGETS,
+        "pca_skill_targets": PCA_TARGETS,
+        "missing_target_policy": "Per-target masks; no label imputation.",
+        "next_season_minutes": "Predicted by the shared model; kept outside the skill-profile PCA.",
+        "test_metrics_computed": False,
+    }
     (folder / "rate_preprocessing.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print("Saved new arrays to: " + str(path))
 

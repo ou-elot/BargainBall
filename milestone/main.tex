@@ -73,45 +73,44 @@ identifiers are not model inputs.
 Missing inputs are filled with training-set feature medians. Numerical inputs
 are standardized separately for each season using that season's training mean
 and standard deviation; those values are also applied to development and test
-data. Missing outputs are not filled in. Two training examples lack WS/48 or BPM
-values needed for targets or baselines, so these models and PCA use 7,888
-examples; PIE and minutes use all 7,890. All development and test examples have
-the required values. No pretrained models or data augmentation were used.
+data. Missing outputs are not filled in. Two training examples lack WS/48 or BPM.
+The shared model uses masked target losses, so PIE and minutes use all 7,890
+training examples while the two rate targets use 7,888. PCA uses 7,888 jointly
+valid rows. All development examples have all four outcomes. No pretrained
+models or data augmentation were used.
 
 \section{Approach}
 The proposal originally focused on predicting Player Impact Estimate (PIE).
-The project now uses four separate neural networks, one each for PIE, Win Shares
-per 48 minutes (WS/48), Box Plus/Minus (BPM), and total regular-season minutes.
-The four predictions are combined into one score using principal component
-analysis (PCA).
+The current candidate is one shared neural network with four outputs: PIE,
+Win Shares per 48 minutes (WS/48), Box Plus/Minus (BPM), and total regular-season
+minutes. The four predictions are combined into one score using principal
+component analysis (PCA).
 
 \paragraph{Neural networks.}
-All four networks use the 22 inputs described in Section~2. They were implemented
-in NumPy \cite{harris2020}, each with two ReLU hidden layers and one linear
-output neuron. Weights use He initialization \cite{he2015}. Each network is
-trained separately using mean squared error with L2 regularization:
+The shared NumPy model \cite{harris2020} uses the 22 inputs described in
+Section~2, two ReLU hidden layers (64 and 32 units), and a four-neuron linear
+output layer. Weights use He initialization \cite{he2015}. The masked
+task-balanced loss averages each target's MSE over its available labels, then
+averages across the four targets, with L2 regularization:
 \begin{equation}
-  \mathcal{L}=\frac{1}{m}\sum_{i=1}^{m}
-  \left(\widehat{y}_i-y_i\right)^2
+  \mathcal{L}=\frac{1}{|\mathcal{T}|}
+  \sum_{j\in\mathcal{T}}
+  \frac{\sum_i M_{ij}\left(\widehat{y}_{ij}-y_{ij}\right)^2}
+  {\sum_i M_{ij}}
   +\frac{\lambda}{2}\sum_{\ell}
   \left(\|W_{\ell}\|_F^2+\|b_{\ell}\|_2^2\right).
 \end{equation}
-Here, $y_i$ is the target and $\widehat{y}_i$ is the prediction.
-PIE targets keep their original values; the other targets are standardized using
-training-set means and standard deviations. Predictions are converted back
-before evaluation and PCA, with negative minute predictions set to zero.
-Training uses Adam \cite{kingma2015}, batch size 64, $\lambda=10^{-4}$, and at most
-300 epochs. Training stops if development RMSE does not improve for 25 epochs,
-and the weights from the best epoch are saved. All selected models use 10\%
-dropout \cite{srivastava2014} during training. Dropout is turned off when
-calculating reported errors.
+Here, $M_{ij}$ indicates whether target $j$ is observed for example $i$.
+Targets are standardized using training-set means and standard deviations.
+Predictions are converted back before evaluation and PCA, with negative minute
+predictions set to zero. Training uses Adam \cite{kingma2015}, batch size 64,
+$\lambda=10^{-4}$, and at most 300 epochs. Development early stopping selected
+10\% dropout \cite{srivastava2014} and epoch 23. Dropout is off when calculating
+reported errors.
 
-Initial model selection compared hidden-layer widths, learning rates, and
-dropout in 69 runs for PIE, WS/48, and BPM, plus six for minutes; each run used
-seed 42. A five-seed comparison found that one-hidden-layer candidates had the
-lowest mean individual-target RMSE. However, the seed-42 one-layer bundle had a
-slightly higher development composite RMSE (0.7609) than the two-layer bundle
-(0.7568), so we retain the two-layer models as primary.
+Earlier experiments selected independent networks per target. These are
+retained as a development benchmark; the current model shares its hidden
+representation across all outputs.
 
 A separate five-seed comparison of two-layer widths found the lowest mean
 individual-target RMSE with widths 128--64 for PIE, 64--32 for WS/48, 32--16
@@ -145,54 +144,74 @@ composite errors use training-composite standard-deviation units. Each network
 is trained on its own target, and the combined PCA score is evaluated afterward.
 
 \paragraph{Remaining work.}
-First, normalize listed salaries by the corresponding season's salary cap and
-fit a training-only salary--performance benchmark, including rookie contracts.
-Next, compare forecast-based value shortlists with prior-performance shortlists
-on development data. Then evaluate simpler regressions, age/position/playing-time
-subgroups, and any low-minute reliability policy without optimizing it on test
-results. Finally, plan forward-in-time evaluation with a genuinely untouched
-future assessment; the currently examined test split cannot provide a new
-independent confirmation of a redesigned method.
+Salaries have now been normalized by the cap for each target season \cite{basketballreferencecap2026}.
+The existing training-fitted PCA of next-season PIE, WS, and VORP now has a
+salary--performance benchmark fit on training data only. It uses 7,680 training
+rows with salaries not flagged for source review. The development comparison
+contains 1,650 eligible rows; 41 rows with missing or flagged salaries are
+excluded from this primary shortlist analysis. Forecast-based value shortlists
+are compared with prior-performance shortlists in
+\texttt{results/development/salary\_value/}. The comparison is exploratory and
+does not use the test split. Of 11,176 available salary records overall, 194
+remain flagged for source review; 4,265 records were corroborated through exact
+cross-matches to independent salary archives, and 24 additional records received
+direct source checks. One name-collision salary was corrected. The 96 missing
+salaries remain preserved. Continue reviewing the unresolved salary-source flags
+and examine whether the benchmark and shortlist conclusions
+are sensitive to those records. Also evaluate simpler regressions,
+age/position/playing-time subgroups, and any low-minute reliability policy
+without optimizing it on test results. Finally, plan forward-in-time
+evaluation with a genuinely untouched future assessment; the currently examined
+test split cannot provide a new independent confirmation of a redesigned method.
+
+\paragraph{Exploratory performance profiles.}
+As a separate descriptive analysis, a three-component PCA and four K-means
+profiles were fit on training outcomes only. Development players were assigned
+using forecast outcomes; salary was not included as a clustering feature.
+Forecast-assigned profiles matched profiles from observed development outcomes
+for 72.4\% of players (adjusted Rand index 0.317). The groups are
+multidimensional profiles, not ordered ability tiers; no development forecast
+was assigned to the lowest-PC1 training cluster. This exploratory result is
+not an independent test estimate.
 
 \section{Partial Results}
-Table~\ref{tab:dev} reports development results from the primary two-hidden-layer
-models. All four targets improve on persistence RMSE. The minutes network reduces
-RMSE from 677.54 to 589.94 minutes (12.93\%); the four-stat composite reduces it
-from 0.9066 to 0.7568 (16.53\%). Adding minutes changes the composite's definition,
-so a lower RMSE than a previous three-stat composite does not establish that the
-new definition is a better basketball metric.
+Table~\ref{tab:dev} compares the shared network with the earlier separate-target
+networks and persistence on the same development rows. The shared model improves
+on persistence for each target, but is slightly less accurate than the separate
+networks. Its four-stat composite RMSE is 0.7733, versus 0.7568 for the separate
+networks and 0.9066 for persistence. These are development comparisons, not
+independent confirmation. The four-stat composite includes playing time and
+should not be interpreted as a pure ability or salary-value score.
 
 \begin{table}[ht]
   \centering
   \small
   \setlength{\tabcolsep}{4pt}
-  \begin{tabular}{lccrr}
-    \toprule
-    Target & Hidden widths & Learning rate & Baseline RMSE & Model RMSE \\
-    \midrule
-    PIE & 32, 16 & 0.001 & 0.04584 & 0.03548 \\
-    WS/48 & 128, 64 & 0.001 & 0.08279 & 0.07068 \\
-    BPM & 32, 16 & 0.003 & 3.70394 & 3.13535 \\
-    Total minutes & 64, 32 & 0.001 & 677.54 & 589.94 \\
-    PCA composite & --- & --- & 0.90660 & 0.75676 \\
-    \bottomrule
-  \end{tabular}
-  \caption{Development performance on 1,691 examples. Each target has different
-  units, so error magnitudes should not be compared across rows.}
+    \begin{tabular}{lrrr}
+      \toprule
+      Target & Shared RMSE & Separate RMSE & Persistence RMSE \\
+      \midrule
+      PIE & 0.03628 & 0.03548 & 0.04584 \\
+      WS/48 & 0.07203 & 0.07068 & 0.08279 \\
+      BPM & 3.18805 & 3.13535 & 3.70394 \\
+      Total minutes & 594.01 & 589.94 & 677.54 \\
+      PCA composite & 0.77333 & 0.75676 & 0.90660 \\
+      \bottomrule
+    \end{tabular}
+    \caption{Development RMSE on 1,691 examples. Each target has different
+    units, so error magnitudes should not be compared across rows.}
   \label{tab:dev}
 \end{table}
 
-The one-layer alternative's seed-42 development composite RMSE was 0.7609,
-slightly higher than the primary two-layer model's 0.7568. The one-layer
-candidate's favorable average individual-target rankings therefore did not
-yield a lower composite error in that run.
+The separate-target reference is the previously selected four-stat bundle.
+Its results are retained for comparison; the shared model is the current
+single-network candidate.
 
-The primary two-hidden-layer four-stat pipeline was evaluated on the original
-test split (Table~\ref{tab:loss}); the one-layer and new width-search candidates
-were not. That split had already been inspected during earlier three-stat
-development, before the four-stat design was fixed. These are \emph{exploratory
-follow-up test results}, not independent final confirmation. No weights or PCA
-settings changed during that evaluation.
+Only the previous separate-target model was evaluated on the original test
+split (Table~\ref{tab:loss}); the shared model has not been evaluated on test.
+That split had already been inspected during earlier three-stat development.
+The historical test results are \emph{exploratory follow-up results}, not
+independent final confirmation. No new test evaluation was done for this change.
 
 \begin{table}[ht]
   \centering
@@ -206,12 +225,13 @@ settings changed during that evaluation.
     Test (follow-up) & 1.1840 & 2.0520 & 0.4938 \\
     \bottomrule
   \end{tabular}
-  \caption{Final composite loss with dropout disabled and all eligible rows
-  retained: 7,888 training and 1,691 examples in each evaluation split.}
+    \caption{Historical separate-target composite loss with dropout disabled
+    and all eligible rows retained: 7,888 training and 1,691 examples in each
+    evaluation split. This table does not evaluate the shared model.}
   \label{tab:loss}
 \end{table}
 
-For the primary two-layer pipeline, test composite RMSE is 1.0881 versus baseline
+For the historical separate-target pipeline, test composite RMSE is 1.0881 versus baseline
 1.4325 (24.04\% reduction), but
 extreme short appearances strongly affect squared error. A two-minute
 Kuzminskas season with source-listed PIE $-4.0$ contributes 57.84\% of composite
@@ -228,7 +248,7 @@ recorded. Plots use Matplotlib \cite{hunter2007}.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\linewidth]{figures/composite_losses.pdf}
-  \caption{Primary two-layer frozen-composite train/development/test error. Bars show model errors;
+  \caption{Historical separate-target frozen-composite train/development/test error. Bars show model errors;
   diamonds show persistence. The test split is the previously examined follow-up
   split. Similar MAE and larger test MSE highlight sensitivity to extreme errors.}
   \label{fig:loss}

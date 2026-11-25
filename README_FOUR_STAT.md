@@ -1,26 +1,10 @@
-# Current model: PIE, WS/48, BPM, and total playing time
+# Historical four-stat experiments
 
-## Pipeline
+The active broader profile model is documented in `README_PROFILE_MODEL.md`.
+This page preserves the older four-target analyses and separate-network results
+for comparison; those runs are not the current pipeline.
 
-```text
-22 prior-season inputs (including age, games and minutes per game)
-                            |
-           Four separately trained NumPy networks
-                            |
-        Predicted PIE / WS48 / BPM / total season minutes
-                            |
-             Fixed training-derived standardization
-                            |
-                Fixed four-variable PCA component
-                            |
-        Predicted effectiveness + playing-time composite
-```
-
-The fourth output is **next-season regular-season total minutes**, not minutes
-per game. Higher predicted minutes now increases the composite when the other
-predictions are fixed. Salary remains a separate valuation input.
-
-## Completed run
+### Historical separate-network run
 
 ```text
 models/numpy_four_stat/20261109_204731_573737/
@@ -41,7 +25,7 @@ learning rate 0.001, weight decay 0.0001, seed 42, maximum 300 epochs, and
 development early stopping with patience 25. Settings are near the top of
 `build_four_stat_models.py`.
 
-## Development results
+### Historical separate-network development results
 
 | Target | Model RMSE | Prior-season baseline RMSE | RMSE reduction |
 |---|---:|---:|---:|
@@ -79,7 +63,7 @@ This is a hybrid of effectiveness and opportunity/availability. It is not a
 pure rate metric, a causal estimate of contribution under a different role,
 or a dollar-value score. It does not turn the component into estimated wins.
 
-## Data handling
+### Historical separate-network data handling
 
 - The existing `model_data_rates.npz`, row order, and split assignments are
   reused. No replacement array file or new split is necessary.
@@ -99,7 +83,7 @@ or a dollar-value score. It does not turn the component into estimated wins.
 - Examples require an observed immediately following NBA season. The minutes
   forecast is conditional on this cohort; league exit is not modeled.
 
-## Commands
+### Historical separate-network commands
 
 Build a new timestamped bundle and run the development comparison:
 
@@ -142,7 +126,7 @@ statistics, scores = predict_bundle(X_rows, models, pca, manifest["feature_names
 `scores` contains the four-stat PCA composite. `X_rows` must use the original
 preprocessing and feature order; this function does not accept raw statistics.
 
-## Evaluation status
+### Historical separate-network evaluation status
 
 The frozen version now also has a follow-up output-loss evaluation on the
 original test split. No model parameters or PCA settings were updated during
