@@ -17,8 +17,8 @@ but are omitted from PCA because they are undefined for players with no
 attempts. Minutes are predicted by the shared model but excluded from skill
 similarity; salary is displayed only as optional context.
 
-To calculate a comp-based market reference from those neighbors, run
-`python estimate_salary_from_comps.py`. For each query it reports the median
+To calculate a comp-based market reference from those neighbors, use the
+comp-salary section in notebook 03. For each query it reports the median
 salary-cap share and 25th–75th percentile range among the nearest historical
 comps that have an available, non-review-flagged salary. It also converts those
 shares to approximate dollars using the query target season's cap. At least
@@ -42,11 +42,7 @@ Detailed per-target metrics, predictions, and comp lists are in
 `results/development/multitask_profile/20261125_111617_124760/`.
 
 To inspect performance by prior-season production tier and the contribution
-from extreme errors, run:
-
-```powershell
-python audit_profile_tiers.py
-```
+from extreme errors, use the tier-audit section in notebook 03.
 
 It defines five prior-PIE tiers from training-split quintiles and applies those
 fixed boundaries to development. It writes tier-level metrics,
@@ -65,6 +61,35 @@ global eligibility filter would sacrifice the limited-history population for
 little overall benefit; keep those players in the training set for now.
 Detailed results are saved in
 `results/development/multitask_profile/20261125_114303_894490/`.
+The saved sensitivity comparison and the legacy architecture experiment
+summaries are reviewed together in `analysis/06_model_experiments.ipynb`.
+
+## Experimental salary model
+
+`analysis/04_salary_model.ipynb` fits a small Ridge regression to log
+salary-cap share using forecast production, age, position, prior games/minutes,
+and target season. It excludes prior salary and hometown. Training production
+features are generated out-of-fold; source-review-flagged salaries are
+excluded. On 1,597 eligible development rows, the model's mean absolute error
+was 3.83 salary-cap percentage points versus 5.19 for the nearest-comp median.
+This is an exploratory result on the development split, not a chronological
+future-season test. The OOF folds are random, so a time-ordered backtest is
+needed before treating the improvement as evidence of future performance.
+The test split was not loaded.
+
+## 2026 salary holdout
+
+`analysis/05_temporal_salary_holdout.ipynb` now fits using target seasons
+through 2025 and evaluates only target season 2026. It retrains the profile
+forecaster using earlier outcomes, uses expanding time-causal forecasts for
+salary-model fitting, and rebuilds the PCA basis and historical comp pool from
+pre-2026 profiles. On 55 eligible 2026 development rows, Ridge MAE was 3.28
+cap percentage points (RMSE 4.33), versus 4.26 (RMSE 5.75) for the
+historical-comp median. The 2026 rows were excluded from fitting. This is a
+chronological backtest, but not a fresh blind test because 2026 development
+results were examined previously. The historical test split was not loaded.
+Predictions, metrics, and the retrained model are saved under the current
+development run directory and `models/numpy_salary_ridge/temporal_<run-id>/`.
 
 This is development-set evidence, not independent test confirmation. The
 historical test split was not loaded for this run, but was examined earlier in
@@ -72,30 +97,20 @@ the project, so it should not be presented as a pristine holdout.
 
 ## Reproduce
 
-```powershell
-python prepare_rates.py
-python preprocess_rates.py
-python train_multitask_profile.py
-python estimate_salary_from_comps.py
-```
+Run notebooks `01_data_preparation.ipynb` through
+`08_optional_exploratory_analyses.ipynb` in order. Data rebuilding is opt-in in notebook 01,
+experiment reruns are opt-in in notebook 06, and downloads/audit writes are
+opt-in in notebook 07. Notebook 02 trains the primary model and displays saved
+diagnostic figures inline. Older Python scripts are retained as reference
+copies; optional legacy comps and clustering workflows are in notebook 08.
 
 Optional low-game sensitivity run and comparison:
 
-```powershell
-python train_multitask_profile.py --min-prior-games 10
-python compare_min_games_runs.py
-```
+For the optional low-game sensitivity run, set the `main()` argument to
+`min_prior_games=10` in notebook 02 and compare the resulting outputs in
+notebook 03. The unrestricted model remains the primary model.
 
-Inference using the saved checkpoint:
-
-```python
-from multitask_profile_pipeline import load_bundle, predict_profile
-
-metadata, parameters, pca = load_bundle("models/numpy_multitask_profile/<run-id>")
-predictions, profile_coordinates = predict_profile(
-    X_rows, metadata["feature_names"], metadata, parameters, pca
-)
-```
-
-Prediction columns follow `metadata["target_order"]`; PCA coordinates use the
-ordered skill targets in `metadata["skill_pca_target_order"]`.
+The training notebook includes checkpoint saving, development inference, and
+PCA-coordinate generation. Its output columns follow the target order defined
+near the top of notebook 02; PCA coordinates use only the designated skill
+targets, excluding minutes and salary.

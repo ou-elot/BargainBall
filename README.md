@@ -41,6 +41,14 @@ comparisons use the training/development split only. See
 
 ## Project contents
 
+- `analysis/01_data_preparation.ipynb` through
+  `analysis/08_optional_exploratory_analyses.ipynb`: ordered notebook workflow for data
+  preparation, primary model training, diagnostics and comps, salary modeling,
+  temporal holdout, model experiments, source verification, PCA feature audits,
+  and optional salary-value, player-comp, and clustering analyses. The current
+  profile model can be trained in notebook 02, and saved results and experiment
+  comparisons are visualized inline. Expensive or file-writing experiments are
+  opt-in. Notebook variables use camelCase and concise comments.
 - `milestone/`: report source, references, figure, and generated PDF.
 - `numpy_network.py`, `train_numpy.py`, `numpy_pipeline.py`: original
   single-target NumPy models and PCA pipeline.
@@ -53,9 +61,8 @@ comparisons use the training/development split only. See
 - `prepare_data.py`, `audit_salary_sources.py`,
   `record_online_salary_checks.py`, `preprocess.py`, `prepare_rates.py`,
   `preprocess_rates.py`: dataset preparation and preprocessing.
-- `find_*`, `group_*`, `analyze_salary_*.py`: optional exploratory analyses;
-  they are not part of the model-training path.
-- `compare_*`: architecture and width experiments on train/development data.
+- The `.py` files remain command-line/reference copies of notebook workflows;
+  use the notebooks for the primary workflow and inline visualizations.
 - `data/raw/download_manifest.json`: source URLs and checksums. Raw and
   processed datasets, checkpoints, and detailed prediction outputs are kept
   out of this portfolio repository.
@@ -104,16 +111,33 @@ Use Python 3.12 or a compatible Python version. Install the dependencies:
 python -m pip install -r requirements.txt
 ```
 
-Download the source datasets and prepare model arrays:
+If raw source files are missing, first use the source-download section in
+`analysis/07_data_audits.ipynb` (downloads are disabled by default). Then run
+the main workflow in order:
 
-```powershell
-python download_data.py
-python prepare_data.py
-python preprocess.py
-python prepare_rates.py
-python preprocess_rates.py
-python train_multitask_profile.py
-```
+1. `analysis/01_data_preparation.ipynb`
+2. `analysis/02_model_training.ipynb`
+3. `analysis/03_checks_comps_salary.ipynb`
+4. `analysis/04_salary_model.ipynb`
+5. `analysis/05_temporal_salary_holdout.ipynb`
+6. `analysis/06_model_experiments.ipynb`
+7. `analysis/07_data_audits.ipynb` (for optional salary-source and PCA audits)
+8. `analysis/08_optional_exploratory_analyses.ipynb`
+
+Notebook 07 serves both as the optional source-download setup and as the final
+audit notebook. The data-rebuild cell in notebook 01 is disabled by default
+because it rewrites processed artifacts. Notebook 02 trains the active model;
+this may take several minutes. OOF salary-model fitting and the chronological
+salary holdout in notebooks 04–05 also retrain models and can take longer.
+Experiment and audit switches are disabled by default. The notebooks contain
+the active implementation directly; matching Python files remain reference
+copies, including historical scripts that are not part of the current model.
+
+Raw data are not committed to this repository. A fresh checkout needs the
+source files downloaded in notebook 07 and the reviewed
+`data/raw/salaries/BargainBall_listed_salaries.csv` reconciliation file before
+notebook 01 can rebuild the processed data. Existing processed arrays can be
+used directly when they are available locally.
 
 The raw data are not included here. Review source terms and attributions before
 redistributing downloaded or derived data. The historical separate-target

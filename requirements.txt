@@ -2,3 +2,5 @@ numpy
 pandas
 pyarrow
 scikit-learn
+jupyter
+matplotlib
